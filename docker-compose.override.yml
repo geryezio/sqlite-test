@@ -1,6 +1,0 @@
-services:
-  app-test:
-    volumes:
-      - .:/app
-    environment:
-      - WATCHPACK_POLLING=true
