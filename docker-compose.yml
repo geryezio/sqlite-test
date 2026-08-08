@@ -1,0 +1,25 @@
+services:
+  app-test:
+    build:
+      context: .
+      target: ${DOCKER_BUILD_TARGET:-runner}
+      args:
+        UID: ${WEB_UID:-1000}
+        GID: ${WEB_GID:-1000}
+        DATABASE_URL: ${DATABASE_URL}
+        AUTH_SECRET: ${AUTH_SECRET}
+    container_name: app-test
+    restart: unless-stopped
+    command: ${DOCKER_APP_COMMAND:-node server.js}
+    env_file:
+      - .env
+    environment:
+      - HOSTNAME=${HOSTNAME:-0.0.0.0}
+    volumes:
+      - .:/app
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    external: true
